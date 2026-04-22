@@ -32,7 +32,6 @@ else:
         "bookami.net",
         "www.bookami.net"
     ]
-)
 
 
 # Application definition
