@@ -5,6 +5,7 @@ import urllib.request
 import jwt
 from django.conf import settings
 from django.core.cache import cache
+from elasticsearch_dsl import Q
 from google.auth.transport import requests as google_requests
 from google.oauth2 import id_token as google_id_token
 from jwt.algorithms import RSAAlgorithm
@@ -197,6 +198,78 @@ class BookshelvesView(APIView):
 
 
 class BookSearchView(APIView):
+    def _build_search_query(self, query):
+        return Q(
+            "bool",
+            should=[
+                Q(
+                    "match_phrase_prefix",
+                    title={"query": query, "boost": 10, "max_expansions": 20},
+                ),
+                Q(
+                    "match",
+                    **{
+                        "title.autocomplete": {
+                            "query": query,
+                            "boost": 8,
+                            "operator": "and",
+                        }
+                    },
+                ),
+                Q(
+                    "nested",
+                    path="authors",
+                    query=Q(
+                        "bool",
+                        should=[
+                            Q(
+                                "match_phrase_prefix",
+                                **{
+                                    "authors.name": {
+                                        "query": query,
+                                        "boost": 7,
+                                        "max_expansions": 20,
+                                    }
+                                },
+                            ),
+                            Q(
+                                "match",
+                                **{
+                                    "authors.name.autocomplete": {
+                                        "query": query,
+                                        "boost": 6,
+                                        "operator": "and",
+                                    }
+                                },
+                            ),
+                            Q(
+                                "match",
+                                **{
+                                    "authors.name": {
+                                        "query": query,
+                                        "boost": 3,
+                                        "fuzziness": "AUTO",
+                                    }
+                                },
+                            ),
+                        ],
+                        minimum_should_match=1,
+                    ),
+                ),
+                Q(
+                    "multi_match",
+                    query=query,
+                    fields=[
+                        "title^3",
+                        "summary",
+                        "subjects",
+                        "description",
+                    ],
+                    fuzziness="AUTO",
+                ),
+            ],
+            minimum_should_match=1,
+        )
 
     def get(self, request):
         q = request.query_params.get("q", "").strip()
@@ -215,18 +288,7 @@ class BookSearchView(APIView):
         search = BookDocument.search()
 
         if q:
-            search = search.query(
-                "multi_match",
-                query=q,
-                fields=[
-                    "title^3",
-                    "authors.name^2",
-                    "summary",
-                    "subjects",
-                    "description",
-                ],
-                fuzziness="AUTO",
-            )
+            search = search.query(self._build_search_query(q))
         else:
             search = search.sort("-downloads")
 

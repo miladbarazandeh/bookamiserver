@@ -1,14 +1,53 @@
 from django_elasticsearch_dsl import Document, fields
 from django_elasticsearch_dsl.registries import registry
+from elasticsearch_dsl import analyzer, token_filter
 
 from .models import Author, Book, Bookshelf, Subject
 
 
+autocomplete_filter = token_filter(
+    "book_autocomplete_filter",
+    "edge_ngram",
+    min_gram=1,
+    max_gram=20,
+)
+
+autocomplete_analyzer = analyzer(
+    "book_autocomplete",
+    tokenizer="standard",
+    filter=["lowercase", "asciifolding", autocomplete_filter],
+)
+
+autocomplete_search_analyzer = analyzer(
+    "book_autocomplete_search",
+    tokenizer="standard",
+    filter=["lowercase", "asciifolding"],
+)
+
+
 @registry.register_document
 class BookDocument(Document):
+    title = fields.TextField(
+        analyzer="standard",
+        fields={
+            "keyword": fields.KeywordField(),
+            "autocomplete": fields.TextField(
+                analyzer=autocomplete_analyzer,
+                search_analyzer=autocomplete_search_analyzer,
+            ),
+        },
+    )
     authors = fields.NestedField(
         properties={
-            "name": fields.TextField(analyzer="standard"),
+            "name": fields.TextField(
+                analyzer="standard",
+                fields={
+                    "autocomplete": fields.TextField(
+                        analyzer=autocomplete_analyzer,
+                        search_analyzer=autocomplete_search_analyzer,
+                    )
+                },
+            ),
             "birth_year": fields.IntegerField(),
             "death_year": fields.IntegerField(),
             "aliases": fields.TextField(analyzer="standard", multi=True),
@@ -34,9 +73,9 @@ class BookDocument(Document):
 
     class Django:
         model = Book
+        queryset_pagination = 1000
         fields = [
             "id",
-            "title",
             "language",
             "downloads",
             "issued_date",
