@@ -91,12 +91,23 @@ class GoogleSignInView(APIView):
 
 APPLE_JWKS_URL = "https://appleid.apple.com/auth/keys"
 APPLE_ISSUER = "https://appleid.apple.com"
+APPLE_JWKS_CACHE_KEY = "apple_jwks"
+APPLE_JWKS_CACHE_TTL = 60 * 60 * 24  # 1 day
 
 
 def _fetch_apple_public_key(kid):
-    with urllib.request.urlopen(APPLE_JWKS_URL) as response:  # noqa: S310
-        jwks = json.loads(response.read())
+    jwks = cache.get(APPLE_JWKS_CACHE_KEY)
+    if jwks is None:
+        with urllib.request.urlopen(APPLE_JWKS_URL) as response:  # noqa: S310
+            jwks = json.loads(response.read())
+        cache.set(APPLE_JWKS_CACHE_KEY, jwks, APPLE_JWKS_CACHE_TTL)
     key_data = next((k for k in jwks["keys"] if k["kid"] == kid), None)
+    if key_data is None:
+        # kid not found — keys may have rotated; bust cache and retry once
+        with urllib.request.urlopen(APPLE_JWKS_URL) as response:  # noqa: S310
+            jwks = json.loads(response.read())
+        cache.set(APPLE_JWKS_CACHE_KEY, jwks, APPLE_JWKS_CACHE_TTL)
+        key_data = next((k for k in jwks["keys"] if k["kid"] == kid), None)
     if key_data is None:
         raise ValueError(f"No Apple public key found for kid={kid}")
     return RSAAlgorithm.from_jwk(json.dumps(key_data))
@@ -106,10 +117,10 @@ class AppleSignInView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
-        id_token = request.data.get("id_token")
+        id_token = request.data.get("identity_token")
         if not id_token:
             return Response(
-                {"error": "id_token is required"}, status=status.HTTP_400_BAD_REQUEST
+                {"error": "identity_token is required"}, status=status.HTTP_400_BAD_REQUEST
             )
 
         try:
