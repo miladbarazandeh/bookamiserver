@@ -25,11 +25,10 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", True) == "True"
 
-
-ALLOWED_HOSTS = (
-    ["*"]
-    if DEBUG
-    else [
+if DEBUG:
+    ALLOWED_HOSTS = ["*"]
+else:
+    ALLOWED_HOSTS = [
         "bookami.net",
         "www.bookami.net"
     ]
