@@ -1,0 +1,90 @@
+services:
+  db:
+    image: postgres:18
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - bookami_data:/var/lib/postgresql
+    ports:
+      - "6432:5432"
+    env_file:
+     - .env
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: backend-image
+    command: sh -c "gunicorn --config gunicorn_config.py bookamiserver.wsgi:application --reload"
+    restart: always
+    expose:
+      - "8001"
+    ports:
+      - "8001:8000"
+    volumes:
+      - ./:/app
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+  # nginx:
+  #   image: nginx:alpine
+  #   restart: unless-stopped
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   volumes:
+  #     - ./staticfiles:/app/staticfiles/
+  #     - ./media/:/app/media/
+  #     - ./nginx/conf.d/:/etc/nginx/conf.d/
+  #     - ./nginx/certbot/conf:/etc/letsencrypt
+  #     - ./nginx/certbot/www:/var/www/certbot
+  #   depends_on:
+  #     - backend
+
+  
+  redis:
+    image: redis:8.4-alpine
+    command: redis-server --requirepass "${REDIS_PASSWORD}"
+    expose:
+      - 6379
+    ports:
+      - "6380:6379"
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.16.1
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=$ELASTIC_SECURITY
+    ports:
+      - "9201:9200"
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    env_file:
+      - .env
+  # certbot:
+  #   image: certbot/certbot:latest
+  #   volumes:
+  #     - ./nginx/certbot/conf:/etc/letsencrypt
+  #     - ./nginx/certbot/www:/var/www/certbot
+  #   depends_on:
+  #     - nginx
+
+volumes:
+  bookami_data:
+  elasticsearch_data:
+
+
+
