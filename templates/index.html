@@ -1,0 +1,232 @@
+{% extends "base.html" %}
+
+{% block title %}Bookami — A Library in Your Pocket{% endblock %}
+
+{% block content %}
+
+<!-- Hero -->
+<section class="bg-primary relative overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none select-none">
+        <span class="absolute -top-8 -right-6 font-serif text-[20rem] font-bold text-white opacity-[0.03] leading-none">&ldquo;</span>
+    </div>
+    <div class="max-w-6xl mx-auto px-6 py-28 md:py-36 relative z-10">
+        <div class="max-w-3xl">
+            <div class="inline-flex items-center gap-2 bg-white/10 text-gold border border-gold/30 rounded-full px-4 py-1.5 text-sm font-medium mb-8">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                </svg>
+                Thousands of classics, always free
+            </div>
+            <h1 class="font-serif text-5xl md:text-7xl font-bold text-white leading-[1.1] mb-6">
+                A Library<br>
+                <span class="text-gold italic">in Your Pocket</span>
+            </h1>
+            <p class="text-rose-100 text-lg md:text-xl leading-relaxed mb-10 max-w-2xl">
+                Discover and read the world's greatest literature, completely free. From Tolstoy to Twain, Austen to Dickens — your personal library of timeless classics, always at hand.
+            </p>
+            <div class="flex flex-wrap gap-4">
+                <a href="#" class="inline-flex items-center gap-3 bg-white text-gray-900 px-5 py-3.5 rounded-2xl hover:bg-cream-dark transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5 transform">
+                    <svg class="w-7 h-7 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                    </svg>
+                    <div class="text-left">
+                        <div class="text-xs text-gray-500 font-medium leading-none mb-0.5">Download on the</div>
+                        <div class="text-base font-bold leading-none">App Store</div>
+                    </div>
+                </a>
+                <a href="#" class="inline-flex items-center gap-3 bg-white text-gray-900 px-5 py-3.5 rounded-2xl hover:bg-cream-dark transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5 transform">
+                    <svg class="w-7 h-7 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 01-.61-.92V2.734a1 1 0 01.609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-1.66l1.984 1.149a1 1 0 010 1.608l-1.988 1.151L15.396 12l2.302-2.953zM5.864 2.658L16.8 8.99l-2.302 2.302-8.635-8.635z"/>
+                    </svg>
+                    <div class="text-left">
+                        <div class="text-xs text-gray-500 font-medium leading-none mb-0.5">Get it on</div>
+                        <div class="text-base font-bold leading-none">Google Play</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats bar -->
+<section class="bg-cream-dark border-b border-gray-200">
+    <div class="max-w-6xl mx-auto px-6 py-8">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            <div>
+                <div class="font-serif text-3xl font-bold text-primary">70,000+</div>
+                <div class="text-sm text-gray-500 font-medium mt-1">Classic Books</div>
+            </div>
+            <div>
+                <div class="font-serif text-3xl font-bold text-primary">100%</div>
+                <div class="text-sm text-gray-500 font-medium mt-1">Free, Always</div>
+            </div>
+            <div>
+                <div class="font-serif text-3xl font-bold text-primary">60+</div>
+                <div class="text-sm text-gray-500 font-medium mt-1">Languages</div>
+            </div>
+            <div>
+                <div class="font-serif text-3xl font-bold text-primary">∞</div>
+                <div class="text-sm text-gray-500 font-medium mt-1">Reading Time</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features -->
+<section class="bg-white py-20 md:py-28">
+    <div class="max-w-6xl mx-auto px-6">
+        <div class="text-center mb-16">
+            <h2 class="font-serif text-4xl md:text-5xl font-bold text-primary mb-4">Everything a reader needs</h2>
+            <p class="text-gray-500 text-lg max-w-xl mx-auto">Bookami is built around your reading experience — from discovery to the last page.</p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-8">
+
+            <div class="group p-8 rounded-3xl border border-gray-100 hover:border-gold/30 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div class="w-14 h-14 bg-primary/5 group-hover:bg-primary/10 rounded-2xl flex items-center justify-center mb-6 transition-colors duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7 text-primary">
+                        <path d="M11.25 4.533A9.707 9.707 0 006 3a9.735 9.735 0 00-3.25.555.75.75 0 00-.5.707v14.25a.75.75 0 001 .707A8.237 8.237 0 016 18.75c1.995 0 3.823.707 5.25 1.886V4.533zM12.75 20.636A8.214 8.214 0 0118 18.75c.966 0 1.89.166 2.75.47a.75.75 0 001-.708V4.262a.75.75 0 00-.5-.707A9.735 9.735 0 0018 3a9.707 9.707 0 00-5.25 1.533v16.103z"/>
+                    </svg>
+                </div>
+                <h3 class="font-serif text-xl font-bold text-primary mb-3">Vast Library</h3>
+                <p class="text-gray-500 leading-relaxed">Browse over 70,000 public domain titles sourced from Project Gutenberg — from ancient philosophy to Victorian novels, poetry to science.</p>
+            </div>
+
+            <div class="group p-8 rounded-3xl border border-gray-100 hover:border-gold/30 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div class="w-14 h-14 bg-primary/5 group-hover:bg-primary/10 rounded-2xl flex items-center justify-center mb-6 transition-colors duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7 text-primary">
+                        <path fill-rule="evenodd" d="M2.25 13.5a8.25 8.25 0 018.25-8.25.75.75 0 01.75.75v6.75H18a.75.75 0 01.75.75 8.25 8.25 0 01-16.5 0z" clip-rule="evenodd"/>
+                        <path fill-rule="evenodd" d="M12.75 3a.75.75 0 01.75-.75 8.25 8.25 0 018.25 8.25.75.75 0 01-.75.75h-7.5a.75.75 0 01-.75-.75V3z" clip-rule="evenodd"/>
+                    </svg>
+                </div>
+                <h3 class="font-serif text-xl font-bold text-primary mb-3">Track Your Reading</h3>
+                <p class="text-gray-500 leading-relaxed">Know exactly where you left off. Mark books as Reading, Completed, or Want to Read. Your progress syncs seamlessly across all your devices.</p>
+            </div>
+
+            <div class="group p-8 rounded-3xl border border-gray-100 hover:border-gold/30 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div class="w-14 h-14 bg-primary/5 group-hover:bg-primary/10 rounded-2xl flex items-center justify-center mb-6 transition-colors duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7 text-primary">
+                        <path fill-rule="evenodd" d="M5.25 2.25a3 3 0 00-3 3v4.318a3 3 0 00.879 2.121l9.58 9.581c.92.92 2.39 1.186 3.548.428a18.849 18.849 0 005.441-5.44c.758-1.16.492-2.629-.428-3.548l-9.58-9.581a3 3 0 00-2.121-.879H5.25zM6.375 7.5a1.125 1.125 0 100-2.25 1.125 1.125 0 000 2.25z" clip-rule="evenodd"/>
+                    </svg>
+                </div>
+                <h3 class="font-serif text-xl font-bold text-primary mb-3">Smart Bookshelves</h3>
+                <p class="text-gray-500 leading-relaxed">Explore curated bookshelves by genre, subject, and theme. Discover what to read next through hand-picked collections and browseable categories.</p>
+            </div>
+
+            <div class="group p-8 rounded-3xl border border-gray-100 hover:border-gold/30 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div class="w-14 h-14 bg-primary/5 group-hover:bg-primary/10 rounded-2xl flex items-center justify-center mb-6 transition-colors duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7 text-primary">
+                        <path fill-rule="evenodd" d="M10.5 3.75a6.75 6.75 0 100 13.5 6.75 6.75 0 000-13.5zM2.25 10.5a8.25 8.25 0 1114.59 5.28l4.69 4.69a.75.75 0 11-1.06 1.06l-4.69-4.69A8.25 8.25 0 012.25 10.5z" clip-rule="evenodd"/>
+                    </svg>
+                </div>
+                <h3 class="font-serif text-xl font-bold text-primary mb-3">Powerful Search</h3>
+                <p class="text-gray-500 leading-relaxed">Find any title, author, or subject instantly with fuzzy full-text search across the entire catalog. Filter by language to read in your native tongue.</p>
+            </div>
+
+            <div class="group p-8 rounded-3xl border border-gray-100 hover:border-gold/30 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div class="w-14 h-14 bg-primary/5 group-hover:bg-primary/10 rounded-2xl flex items-center justify-center mb-6 transition-colors duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7 text-primary">
+                        <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z"/>
+                    </svg>
+                </div>
+                <h3 class="font-serif text-xl font-bold text-primary mb-3">Personalized Home</h3>
+                <p class="text-gray-500 leading-relaxed">Your home screen surfaces featured picks, the most popular books right now, and your current reads — so you can jump right back in.</p>
+            </div>
+
+            <div class="group p-8 rounded-3xl border border-gray-100 hover:border-gold/30 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div class="w-14 h-14 bg-primary/5 group-hover:bg-primary/10 rounded-2xl flex items-center justify-center mb-6 transition-colors duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7 text-primary">
+                        <path fill-rule="evenodd" d="M12 1.5a5.25 5.25 0 00-5.25 5.25v3a3 3 0 00-3 3v6.75a3 3 0 003 3h10.5a3 3 0 003-3v-6.75a3 3 0 00-3-3v-3c0-2.9-2.35-5.25-5.25-5.25zm3.75 8.25v-3a3.75 3.75 0 10-7.5 0v3h7.5z" clip-rule="evenodd"/>
+                    </svg>
+                </div>
+                <h3 class="font-serif text-xl font-bold text-primary mb-3">Secure Sign-In</h3>
+                <p class="text-gray-500 leading-relaxed">Sign in instantly with your existing Google or Apple account. No passwords to remember — your library is always accessible and secure.</p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- Public domain highlight -->
+<section class="bg-cream-dark py-20 md:py-28">
+    <div class="max-w-6xl mx-auto px-6">
+        <div class="grid md:grid-cols-2 gap-16 items-center">
+            <div>
+                <div class="inline-flex items-center gap-2 text-gold text-sm font-semibold uppercase tracking-widest mb-6">
+                    <span class="w-8 h-px bg-gold inline-block"></span>
+                    The Collection
+                </div>
+                <h2 class="font-serif text-4xl md:text-5xl font-bold text-primary leading-tight mb-6">
+                    Great literature,<br>
+                    <span class="italic">freely given</span>
+                </h2>
+                <p class="text-gray-600 text-lg leading-relaxed mb-6">
+                    Bookami's library is built on Project Gutenberg — the world's oldest digital library, home to over 70,000 books whose copyright has expired in the United States, making them freely available to all.
+                </p>
+                <p class="text-gray-600 leading-relaxed mb-8">
+                    From the complete works of Shakespeare and Dostoyevsky, to scientific papers, historical texts, and forgotten gems — the catalog spans centuries and dozens of languages.
+                </p>
+                <div class="p-5 bg-white rounded-2xl border border-amber-200 flex gap-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-gold flex-shrink-0 mt-0.5">
+                        <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-.671-1.34l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z" clip-rule="evenodd"/>
+                    </svg>
+                    <p class="text-sm text-gray-600 leading-relaxed">
+                        <strong class="text-gray-800">Copyright notice:</strong> These books are in the public domain in the United States. Copyright laws vary by country — a work free in the US may still be protected elsewhere. Please verify the copyright status in your jurisdiction before use.
+                    </p>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bg-primary rounded-3xl p-7 text-white">
+                    <div class="font-serif text-5xl font-bold text-gold mb-2">70K+</div>
+                    <div class="text-rose-200 text-sm font-medium">Public domain titles</div>
+                </div>
+                <div class="bg-white rounded-3xl p-7 shadow-sm border border-gray-100 mt-6">
+                    <div class="font-serif text-5xl font-bold text-primary mb-2">60+</div>
+                    <div class="text-gray-500 text-sm font-medium">Languages represented</div>
+                </div>
+                <div class="bg-white rounded-3xl p-7 shadow-sm border border-gray-100">
+                    <div class="font-serif text-4xl font-bold text-primary mb-2">1971</div>
+                    <div class="text-gray-500 text-sm font-medium">Project Gutenberg founded</div>
+                </div>
+                <div class="bg-gold rounded-3xl p-7 text-white mt-6">
+                    <div class="font-serif text-5xl font-bold mb-2">$0</div>
+                    <div class="text-amber-100 text-sm font-medium">Cost to you, forever</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Download CTA -->
+<section class="bg-primary py-20 md:py-28 relative overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none select-none">
+        <span class="absolute -bottom-16 -left-8 font-serif text-[18rem] font-bold text-white opacity-[0.03] leading-none">&rdquo;</span>
+    </div>
+    <div class="max-w-6xl mx-auto px-6 text-center relative z-10">
+        <h2 class="font-serif text-4xl md:text-6xl font-bold text-white mb-4">Start reading today</h2>
+        <p class="text-rose-200 text-lg md:text-xl mb-12 max-w-xl mx-auto">
+            Join readers discovering timeless stories. Free to download, free to read — always.
+        </p>
+        <div class="flex flex-wrap gap-4 justify-center">
+            <a href="#" class="inline-flex items-center gap-3 bg-white text-gray-900 px-5 py-3.5 rounded-2xl hover:bg-cream-dark transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5 transform">
+                <svg class="w-7 h-7 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                </svg>
+                <div class="text-left">
+                    <div class="text-xs text-gray-500 font-medium leading-none mb-0.5">Download on the</div>
+                    <div class="text-base font-bold leading-none">App Store</div>
+                </div>
+            </a>
+            <a href="#" class="inline-flex items-center gap-3 bg-white text-gray-900 px-5 py-3.5 rounded-2xl hover:bg-cream-dark transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5 transform">
+                <svg class="w-7 h-7 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 01-.61-.92V2.734a1 1 0 01.609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-1.66l1.984 1.149a1 1 0 010 1.608l-1.988 1.151L15.396 12l2.302-2.953zM5.864 2.658L16.8 8.99l-2.302 2.302-8.635-8.635z"/>
+                </svg>
+                <div class="text-left">
+                    <div class="text-xs text-gray-500 font-medium leading-none mb-0.5">Get it on</div>
+                    <div class="text-base font-bold leading-none">Google Play</div>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

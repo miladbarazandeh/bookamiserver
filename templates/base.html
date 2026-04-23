@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Bookami — Your Personal Library{% endblock %}</title>
+    <meta name="description" content="{% block description %}Discover and read thousands of timeless classic books, completely free. Track your reading journey and build your personal library.{% endblock %}">
+    <link rel="icon" type="image/png" href="{% static 'favicon.png' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: '#7B2D42',
+                            dark: '#5A2030',
+                            light: '#9A3852',
+                        },
+                        gold: {
+                            DEFAULT: '#C8922A',
+                            light: '#E8B84B',
+                        },
+                        cream: {
+                            DEFAULT: '#FEFDF8',
+                            dark: '#F2EDE0',
+                        },
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'Georgia', 'serif'],
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    {% block head %}{% endblock %}
+</head>
+<body class="font-sans bg-cream text-gray-800 antialiased min-h-screen flex flex-col">
+
+    <nav class="bg-primary sticky top-0 z-50 shadow-md">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+            <a href="{% url 'landing' %}" class="flex items-center gap-2.5 group">
+                <img src="{% static 'icon.png' %}" alt="Bookami" class="w-7 h-7 flex-shrink-0 rounded-md">
+                <span class="font-serif text-xl font-bold text-white tracking-tight group-hover:text-gold-light transition-colors duration-200">Bookami</span>
+            </a>
+            <div class="flex items-center gap-6 text-sm font-medium">
+                <a href="{% url 'terms' %}" class="text-rose-200 hover:text-white transition-colors duration-200">Terms</a>
+                <a href="{% url 'privacy' %}" class="text-rose-200 hover:text-white transition-colors duration-200">Privacy</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-1">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="bg-primary-dark text-rose-200">
+        <div class="max-w-6xl mx-auto px-6 py-10">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="flex items-center gap-2">
+                    <img src="{% static 'icon.png' %}" alt="Bookami" class="w-5 h-5 flex-shrink-0 rounded">
+                    <span class="font-serif text-lg font-semibold text-white">Bookami</span>
+                </div>
+                <nav class="flex gap-8 text-sm">
+                    <a href="{% url 'terms' %}" class="hover:text-white transition-colors duration-200">Terms &amp; Conditions</a>
+                    <a href="{% url 'privacy' %}" class="hover:text-white transition-colors duration-200">Privacy Policy</a>
+                </nav>
+                <p class="text-sm text-rose-300">&copy; 2026 Bookami. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

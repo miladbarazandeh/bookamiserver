@@ -30,6 +30,8 @@ services:
       - "8001:8000"
     volumes:
       - ./:/app
+      - ./staticfiles:/app/staticfiles
+      - ./templates:/app/templates
     env_file:
       - .env
     depends_on:
