@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Author, Book, BookFormat, Bookshelf, ContactUs, UserBook
+from .models import Author, Book, BookFormat, Bookshelf, ContactUs, Highlight, UserBook
 
 
 class ChildBookshelfSerializer(serializers.ModelSerializer):
@@ -90,6 +90,28 @@ class UserBookSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserBook
         fields = ["book", "status", "progress", "started_at", "last_read_at"]
+
+
+class HighlightSerializer(serializers.ModelSerializer):
+    book_id = serializers.IntegerField(source="book.id", read_only=True)
+
+    class Meta:
+        model = Highlight
+        fields = [
+            "id",
+            "book_id",
+            "start_xpath",
+            "start_offset",
+            "end_xpath",
+            "end_offset",
+            "selected_text",
+            "note",
+            "color",
+            "section_title",
+            "created_at",
+            "updated_at",
+        ]
+        read_only_fields = ["id", "updated_at"]
 
 
 class ContactUsSerializer(serializers.ModelSerializer):

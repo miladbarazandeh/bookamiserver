@@ -63,6 +63,7 @@ class BookDocument(Document):
         multi=True,
         fields={"keyword": fields.KeywordField()},
     )
+    reading_ease_level = fields.KeywordField()
 
     class Index:
         name = "gutenberg_books"

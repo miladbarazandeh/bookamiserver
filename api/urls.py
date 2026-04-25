@@ -13,4 +13,6 @@ urlpatterns = [
     path("books/<int:pk>/", views.BookDetailView.as_view(), name="book-detail"),
     path("user-books/", views.UserBooksListView.as_view(), name="user-books-list"),
     path("user-books/<int:book_id>/", views.UserBookView.as_view(), name="user-book"),
+    path("highlights/", views.HighlightListView.as_view(), name="highlight-list"),
+    path("highlights/<uuid:pk>/", views.HighlightDetailView.as_view(), name="highlight-detail"),
 ]

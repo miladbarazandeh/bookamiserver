@@ -66,6 +66,33 @@ class Book(models.Model):
     summary = models.TextField(blank=True)  # marc520 auto-generated summary
     transcribers = models.TextField(blank=True)  # marc508
     reading_ease = models.CharField(max_length=300, blank=True)  # marc908
+
+    VERY_EASY = "very_easy"
+    EASY = "easy"
+    FAIRLY_EASY = "fairly_easy"
+    NEITHER_EASY_NOR_DIFFICULT = "neither_easy_nor_difficult"
+    SOMEWHAT_DIFFICULT = "somewhat_difficult"
+    DIFFICULT = "difficult"
+    VERY_DIFFICULT = "very_difficult"
+    EXTREMELY_DIFFICULT = "extremely_difficult"
+
+    READING_EASE_LEVEL_CHOICES = [
+        (VERY_EASY, "Very easy to read"),
+        (EASY, "Easy to read"),
+        (FAIRLY_EASY, "Fairly easy to read"),
+        (NEITHER_EASY_NOR_DIFFICULT, "Neither easy nor difficult to read"),
+        (SOMEWHAT_DIFFICULT, "Somewhat difficult to read"),
+        (DIFFICULT, "Difficult to read"),
+        (VERY_DIFFICULT, "Very difficult to read"),
+        (EXTREMELY_DIFFICULT, "Extremely difficult to read"),
+    ]
+
+    reading_ease_level = models.CharField(
+        max_length=30,
+        choices=READING_EASE_LEVEL_CHOICES,
+        blank=True,
+        db_index=True,
+    )
     cover_url = models.URLField(max_length=500, blank=True)
     authors = models.ManyToManyField(Author, related_name="books", blank=True)
     subjects = models.ManyToManyField(Subject, related_name="books", blank=True)
@@ -151,6 +178,30 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+
+
+class Highlight(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    user = models.ForeignKey(
+        "User", on_delete=models.CASCADE, related_name="highlights"
+    )
+    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name="highlights")
+    start_xpath = models.TextField()
+    start_offset = models.IntegerField()
+    end_xpath = models.TextField()
+    end_offset = models.IntegerField()
+    selected_text = models.TextField()
+    note = models.TextField(null=True, blank=True)
+    color = models.CharField(max_length=50)
+    section_title = models.CharField(max_length=512, null=True, blank=True)
+    created_at = models.DateTimeField()
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = "highlights"
+
+    def __str__(self):
+        return f"{self.user_id} — {self.book_id} ({self.id})"
 
 
 class ContactUs(models.Model):

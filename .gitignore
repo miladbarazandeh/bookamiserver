@@ -1,3 +1,67 @@
 epub/
 epub/*
 .env
+.claude/
+# Python
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.pdb
+*.egg
+*.egg-info/
+dist/
+build/
+*.log
+
+# Django
+*.db
+*.sqlite3
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+media/
+static/
+
+# Virtual Environment
+env/
+venv/
+ENV/
+.venv/
+
+# Docker
+.docker/
+docker-compose.override.yml
+
+# PyCharm
+.idea/
+
+# VSCode
+.vscode/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+
+# Environment variables
+.env
+
+# Certbot
+/var/certbot/
+
+# PostgreSQL
+*.dump
+*.sql
+*.bak
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+credentials/
+apicache/

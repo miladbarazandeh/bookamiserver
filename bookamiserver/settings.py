@@ -57,6 +57,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "posthog.integrations.django.PosthogContextMiddleware",
 ]
 
 ROOT_URLCONF = "bookamiserver.urls"
@@ -181,3 +182,7 @@ ELASTICSEARCH_DSL_SIGNAL_PROCESSOR = (
 )
 
 GOOGLE_CLIENT_ID_IOS = os.environ.get("GOOGLE_CLIENT_ID_IOS")
+
+# PostHog configuration
+POSTHOG_PROJECT_TOKEN = os.environ.get("POSTHOG_PROJECT_TOKEN", "")
+POSTHOG_HOST = os.environ.get("POSTHOG_HOST", "https://us.i.posthog.com")
