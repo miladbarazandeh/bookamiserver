@@ -21,7 +21,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: backend-image
+    image: bookami-backend-image
     command: sh -c "gunicorn --config gunicorn_config.py bookamiserver.wsgi:application --reload"
     restart: always
     expose:
