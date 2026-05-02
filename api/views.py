@@ -51,11 +51,17 @@ class GoogleSignInView(APIView):
                 {"error": "id_token is required"}, status=status.HTTP_400_BAD_REQUEST
             )
 
+        platform = request.data.get("platform", "ios")
+
+        client_id = (
+            settings.GOOGLE_CLIENT_ID_WEB
+            if platform == "android"
+            else settings.GOOGLE_CLIENT_ID_IOS
+        )
+
         try:
             info = google_id_token.verify_oauth2_token(
-                id_token,
-                google_requests.Request(),
-                settings.GOOGLE_CLIENT_ID_IOS,
+                id_token, google_requests.Request(), client_id
             )
         except ValueError as exc:
             return Response(
@@ -92,13 +98,19 @@ class GoogleSignInView(APIView):
 
         with new_context():
             if is_new_user:
-                capture("user_signed_up", properties={
-                    "sign_up_method": "google",
-                })
+                capture(
+                    "user_signed_up",
+                    properties={
+                        "sign_up_method": "google",
+                    },
+                )
             else:
-                capture("user_signed_in", properties={
-                    "sign_in_method": "google",
-                })
+                capture(
+                    "user_signed_in",
+                    properties={
+                        "sign_in_method": "google",
+                    },
+                )
 
         return Response(
             {"token": _get_or_create_token(user)}, status=status.HTTP_200_OK
@@ -136,7 +148,8 @@ class AppleSignInView(APIView):
         id_token = request.data.get("identity_token")
         if not id_token:
             return Response(
-                {"error": "identity_token is required"}, status=status.HTTP_400_BAD_REQUEST
+                {"error": "identity_token is required"},
+                status=status.HTTP_400_BAD_REQUEST,
             )
 
         try:
@@ -185,13 +198,19 @@ class AppleSignInView(APIView):
 
         with new_context():
             if is_new_user:
-                capture("user_signed_up", properties={
-                    "sign_up_method": "apple",
-                })
+                capture(
+                    "user_signed_up",
+                    properties={
+                        "sign_up_method": "apple",
+                    },
+                )
             else:
-                capture("user_signed_in", properties={
-                    "sign_in_method": "apple",
-                })
+                capture(
+                    "user_signed_in",
+                    properties={
+                        "sign_in_method": "apple",
+                    },
+                )
 
         return Response(
             {"token": _get_or_create_token(user)}, status=status.HTTP_200_OK
@@ -199,8 +218,13 @@ class AppleSignInView(APIView):
 
 
 _HIGHLIGHT_REQUIRED_FIELDS = [
-    "book_id", "start_xpath", "start_offset", "end_xpath", "end_offset",
-    "selected_text", "color",
+    "book_id",
+    "start_xpath",
+    "start_offset",
+    "end_xpath",
+    "end_offset",
+    "selected_text",
+    "color",
 ]
 
 
@@ -217,7 +241,9 @@ class HighlightListView(APIView):
         try:
             book = Book.objects.get(pk=request.data["book_id"])
         except (Book.DoesNotExist, ValueError, TypeError):
-            return Response({"error": "Book not found"}, status=status.HTTP_404_NOT_FOUND)
+            return Response(
+                {"error": "Book not found"}, status=status.HTTP_404_NOT_FOUND
+            )
 
         raw_created_at = request.data.get("created_at")
         if raw_created_at:
@@ -252,14 +278,18 @@ class HighlightListView(APIView):
             section_title=request.data.get("section_title"),
             created_at=created_at,
         )
-        return Response(HighlightSerializer(highlight).data, status=status.HTTP_201_CREATED)
+        return Response(
+            HighlightSerializer(highlight).data, status=status.HTTP_201_CREATED
+        )
 
 
 class HighlightDetailView(APIView):
 
     def _get_highlight(self, request, pk):
         try:
-            return Highlight.objects.select_related("book").get(pk=pk, user=request.user)
+            return Highlight.objects.select_related("book").get(
+                pk=pk, user=request.user
+            )
         except Highlight.DoesNotExist:
             return None
 
@@ -294,10 +324,13 @@ class ContactUsView(APIView):
         serializer.is_valid(raise_exception=True)
         instance = serializer.save(user=request.user)
         with new_context():
-            capture("contact_submitted", properties={
-                "category": instance.category,
-                "message_length": len(instance.message),
-            })
+            capture(
+                "contact_submitted",
+                properties={
+                    "category": instance.category,
+                    "message_length": len(instance.message),
+                },
+            )
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
@@ -315,13 +348,15 @@ class BookshelvesView(APIView):
     permission_classes = [AllowAny]
 
     def get(self, request):
-        shelves = Bookshelf.objects.filter(is_primary=True, parent__isnull=True).prefetch_related(
-            "sub_bookshelves"
-        )
+        shelves = Bookshelf.objects.filter(
+            is_primary=True, parent__isnull=True
+        ).prefetch_related("sub_bookshelves")
         return Response(BookshelfSerializer(shelves, many=True).data)
 
 
 class BookSearchView(APIView):
+    permission_classes = [AllowAny]
+
     def _build_search_query(self, query):
         return Q(
             "bool",
@@ -404,7 +439,9 @@ class BookSearchView(APIView):
         valid_ease_levels = {choice[0] for choice in Book.READING_EASE_LEVEL_CHOICES}
         if reading_ease_level and reading_ease_level not in valid_ease_levels:
             return Response(
-                {"error": f"Invalid reading_ease_level. Valid values: {', '.join(sorted(valid_ease_levels))}"},
+                {
+                    "error": f"Invalid reading_ease_level. Valid values: {', '.join(sorted(valid_ease_levels))}"
+                },
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -473,16 +510,19 @@ class BookSearchView(APIView):
         ]
 
         with new_context():
-            capture("book_searched", properties={
-                "query_length": len(q),
-                "has_query": bool(q),
-                "has_language_filter": bool(language),
-                "has_bookshelf_filter": bool(bookshelf_id),
-                "has_reading_ease_filter": bool(reading_ease_level),
-                "reading_ease_level": reading_ease_level or None,
-                "result_count": es_response.hits.total.value,
-                "page": page,
-            })
+            capture(
+                "book_searched",
+                properties={
+                    "query_length": len(q),
+                    "has_query": bool(q),
+                    "has_language_filter": bool(language),
+                    "has_bookshelf_filter": bool(bookshelf_id),
+                    "has_reading_ease_filter": bool(reading_ease_level),
+                    "reading_ease_level": reading_ease_level or None,
+                    "result_count": es_response.hits.total.value,
+                    "page": page,
+                },
+            )
 
         return Response(
             {
@@ -495,6 +535,7 @@ class BookSearchView(APIView):
 
 
 class BookDetailView(APIView):
+    permission_classes = [AllowAny]
 
     def get(self, request, pk):
         try:
@@ -505,15 +546,19 @@ class BookDetailView(APIView):
             return Response({"error": "Not found"}, status=status.HTTP_404_NOT_FOUND)
 
         with new_context():
-            capture("book_detail_viewed", properties={
-                "book_id": book.id,
-                "language": book.language,
-            })
+            capture(
+                "book_detail_viewed",
+                properties={
+                    "book_id": book.id,
+                    "language": book.language,
+                },
+            )
 
         return Response(BookDetailSerializer(book).data)
 
 
 class HomeView(APIView):
+    permission_classes = [AllowAny]
 
     def get(self, request):
         return Response(
@@ -661,23 +706,32 @@ class UserBookView(APIView):
         user_book.book = book
         with new_context():
             if created:
-                capture("book_added_to_library", properties={
-                    "book_id": book.id,
-                    "status": requested_status,
-                    "language": book.language,
-                })
+                capture(
+                    "book_added_to_library",
+                    properties={
+                        "book_id": book.id,
+                        "status": requested_status,
+                        "language": book.language,
+                    },
+                )
             else:
                 if requested_status == UserBook.COMPLETED:
-                    capture("book_completed", properties={
-                        "book_id": book.id,
-                        "language": book.language,
-                    })
+                    capture(
+                        "book_completed",
+                        properties={
+                            "book_id": book.id,
+                            "language": book.language,
+                        },
+                    )
                 else:
-                    capture("book_reading_progress_updated", properties={
-                        "book_id": book.id,
-                        "progress": progress,
-                        "status": requested_status,
-                    })
+                    capture(
+                        "book_reading_progress_updated",
+                        properties={
+                            "book_id": book.id,
+                            "progress": progress,
+                            "status": requested_status,
+                        },
+                    )
 
         return Response(
             UserBookSerializer(user_book).data,
@@ -694,7 +748,10 @@ class UserBookView(APIView):
                 status=status.HTTP_404_NOT_FOUND,
             )
         with new_context():
-            capture("book_removed_from_library", properties={
-                "book_id": book_id,
-            })
+            capture(
+                "book_removed_from_library",
+                properties={
+                    "book_id": book_id,
+                },
+            )
         return Response(status=status.HTTP_204_NO_CONTENT)

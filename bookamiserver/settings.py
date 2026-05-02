@@ -28,10 +28,7 @@ DEBUG = os.getenv("DEBUG", True) == "True"
 if DEBUG:
     ALLOWED_HOSTS = ["*"]
 else:
-    ALLOWED_HOSTS = [
-        "bookami.net",
-        "www.bookami.net"
-    ]
+    ALLOWED_HOSTS = ["bookami.net", "www.bookami.net"]
 
 
 # Application definition
@@ -153,6 +150,7 @@ REST_FRAMEWORK = {
 }
 
 GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID")
+GOOGLE_CLIENT_ID_WEB = os.getenv("GOOGLE_CLIENT_ID_WEB", "")
 APPLE_CLIENT_ID = os.environ.get("APPLE_CLIENT_ID")
 
 CACHES = {
